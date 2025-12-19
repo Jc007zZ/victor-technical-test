@@ -23,6 +23,7 @@ CLI em Python que utiliza OpenRouter para acessar modelos de linguagem e oferece
 ```powershell
 python -m venv venv
 venv\Scripts\Activate.ps1
+```
 
 **Linux / macOS:**
 ```bash
