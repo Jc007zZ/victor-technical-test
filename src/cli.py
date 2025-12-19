@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from typing import Optional
 
 import questionary
@@ -99,6 +100,8 @@ def run_agent_interactive(
     
     while True:
         user_input = questionary.text(config["prompt"], style=custom_style).ask()
+        if user_input is None:
+            return None
         if not user_input or user_input.lower() in EXIT_COMMANDS:
             break
         
@@ -180,6 +183,8 @@ def run_interactive_menu(api_key: Optional[str] = None, model: Optional[str] = N
             while client is None:
                 if not api_key:
                     api_key = questionary.password("API key do OpenRouter", style=custom_style).ask()
+                    if api_key is None:
+                        sys.exit(0)
                     if not api_key:
                         typer.echo("Erro: API key é obrigatória", err=True)
                         typer.echo()
@@ -207,6 +212,8 @@ def run_interactive_menu(api_key: Optional[str] = None, model: Optional[str] = N
                     pointer=">"
                 ).ask()
                 
+                if agent_choice is None:
+                    sys.exit(0)
                 if not agent_choice or agent_choice == "Sair":
                     return
                 
@@ -216,7 +223,9 @@ def run_interactive_menu(api_key: Optional[str] = None, model: Optional[str] = N
                     break
             
     except KeyboardInterrupt:
-        pass
+        sys.exit(0)
+    except typer.Exit:
+        raise
     except Exception as e:
         typer.echo(f"Erro: {e}", err=True)
         raise typer.Exit(1)
