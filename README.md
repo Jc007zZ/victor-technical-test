@@ -82,6 +82,3 @@ O menu permite escolher entre os três agentes e usar de forma interativa.
 └── README.md                # Este arquivo
 ```
 
-## 📄 Licença
-
-Este projeto é fornecido como está, sem garantias.
