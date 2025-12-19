@@ -7,7 +7,7 @@ import questionary
 import typer
 from prompt_toolkit.styles import Style
 
-from .agent import OpenRouterClient
+from .client import OpenRouterClient
 from .agents import EmailDrafter, NotesFormatter, PromptGenerator
 from .config import (
     API_KEY_ERROR_KEYWORDS,

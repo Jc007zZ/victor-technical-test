@@ -1,5 +1,5 @@
 from typing import Optional
-from ..agent import OpenRouterClient
+from ..client import OpenRouterClient
 
 
 class EmailDrafter:

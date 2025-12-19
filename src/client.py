@@ -1,4 +1,5 @@
 from openai import OpenAI
+from openai import AuthenticationError, PermissionDeniedError, APIConnectionError, APITimeoutError
 from typing import Optional
 
 from .exceptions import InvalidAPIKeyError, RateLimitError, ConnectionError as OpenRouterConnectionError
@@ -67,13 +68,22 @@ class OpenRouterClient:
                 else:
                     raise ValueError("Resposta da API não contém choices válidas")
                     
+            except (AuthenticationError, PermissionDeniedError) as e:
+                raise InvalidAPIKeyError("API key inválida ou não autorizada")
+            except APIConnectionError as e:
+                raise OpenRouterConnectionError(f"Erro de conexão: {str(e)}")
+            except APITimeoutError as e:
+                raise OpenRouterConnectionError(f"Timeout na conexão: {str(e)}")
             except Exception as e:
                 error_message = str(e)
-                if "401" in error_message or "Unauthorized" in error_message:
+                
+                if "401" in error_message or "Unauthorized" in error_message or "authentication" in error_message.lower() or "permission" in error_message.lower():
                     raise InvalidAPIKeyError("API key inválida ou não autorizada")
                 elif "429" in error_message or "rate limit" in error_message.lower():
                     raise RateLimitError("Rate limit excedido. Tente novamente mais tarde")
-                elif "Connection" in str(type(e).__name__) or "timeout" in error_message.lower():
+                elif "timeout" in error_message.lower():
+                    raise OpenRouterConnectionError(f"Timeout na conexão: {error_message}")
+                elif "connection" in error_message.lower() or "connect" in error_message.lower():
                     raise OpenRouterConnectionError(f"Erro de conexão: {error_message}")
                 else:
                     raise ValueError(f"Erro na requisição: {error_message}")
