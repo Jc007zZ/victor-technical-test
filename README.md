@@ -69,7 +69,7 @@ O menu permite escolher entre os três agentes e usar de forma interativa.
 ├── src/
 │   ├── __main__.py          # Ponto de entrada
 │   ├── cli.py                # Interface CLI principal
-│   ├── agent.py              # Cliente OpenRouter
+│   ├── client.py              # Cliente OpenRouter
 │   ├── config.py             # Configurações
 │   ├── utils.py              # Funções auxiliares
 │   ├── exceptions.py         # Exceções customizadas
@@ -81,15 +81,6 @@ O menu permite escolher entre os três agentes e usar de forma interativa.
 ├── requirements.txt          # Dependências
 └── README.md                # Este arquivo
 ```
-
-## 📝 Informações Adicionais
-
-- O sistema valida automaticamente o conteúdo para garantir que seja apropriado para cada agente
-- Entradas muito longas (>10.000 caracteres) serão rejeitadas
-- O modo interativo permite múltiplas execuções sem precisar fornecer a API key novamente
-- A API key nunca é exibida no terminal (exceto os últimos 4 caracteres quando necessário)
-- O arquivo de configuração é criado com permissões restritas
-- **Nunca compartilhe sua API key publicamente**
 
 ## 📄 Licença
 
